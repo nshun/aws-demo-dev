@@ -1,0 +1,30 @@
+{
+  "configurations": [
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
+      "invokeTarget": {
+        "target": "template",
+        "logicalId": "HelloWorldFunction",
+        "templatePath": "${workspaceFolder}/mod9/sam-app/template.yaml"
+      },
+      "lambda": {
+        "payload": {
+          "json": {
+            "key1": "value1",
+            "key2": "value2",
+            "key3": "value3"
+          }
+        }
+      },
+      "sam": {
+        "containerBuild": false,
+        "skipNewImageCheck": false
+      },
+      "api": {
+        "httpMethod": "get"
+      },
+      "name": "sam-app:HelloWorldFunction"
+    }
+  ]
+}
