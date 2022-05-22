@@ -48,7 +48,6 @@ aws lambda invoke --function-name demo-lambda --invocation-type Event request.js
 ## 作成したリソースの削除
 
 ```sh
-# テーブルの削除
-aws dynamodb delete-table --endpoint-url http://localhost:8000 \
-    --table-name ProductCatalog
+# アプリの削除
+sam delete --stack-name demo-lambda
 ```
