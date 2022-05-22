@@ -6,47 +6,24 @@ IAM ユーザー UserA (ポリシーなし)が S3 にアクセスするために
 
 ## 手順
 
-1. CloudShell にログイン
-2. UserA の作成
+1. UserA の作成
 
 ```sh
 # IAM ユーザーの作成
 aws iam create-user --user-name UserA
 
-# インラインポリシーの内容をファイルに保存
-vi UserA-InlinePolicy.json
-
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": ["sts:AssumeRole"],
-      "Resource": "arn:aws:iam::${AccountId}:role/S3Support"
-    }
-  ]
-}
+# インラインポリシーの内容を確認
+cat UserA-InlinePolicy.json
 
 # UserA にインラインポリシーを付与
 aws iam put-user-policy --user-name UserA --policy-name AssumeRolePolicy --policy-document file://UserA-InlinePolicy.json
 ```
 
-3. S3Support の作成
+2. S3Support の作成
 
 ```sh
-# 信頼ポリシーの内容をファイルに保存 (${AccountID}は書き換える)
-vi S3Support-TrustPolicy.json
-
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::${AccountID}:user/UserA" },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
+# 信頼ポリシーの内容を確認 (${AccountID}は書き換える)
+cat S3Support-TrustPolicy.json
 
 # IAM ロールの作成
 aws iam create-role --role-name S3Support --assume-role-policy-document file://S3Support-TrustPolicy.json
@@ -58,8 +35,8 @@ aws iam get-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
 aws iam attach-role-policy --role-name S3Support --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
 ```
 
-4. CloudShell のタブを水平分割
-5. 実際に操作してみる
+3. タブを水平分割
+4. 実際に操作してみる
 
 ```sh
 # 左: UserA にコンソールアクセスを許可
@@ -90,8 +67,6 @@ aws sts get-caller-identity
 aws s3 ls
 aws s3 ls --recursive s3://${BucketName}
 ```
-
-6. CloudShell で右のタブを閉じる
 
 ## 作成したリソースの削除
 
