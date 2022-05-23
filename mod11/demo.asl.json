@@ -1,0 +1,70 @@
+{
+  "StartAt": "Submit Job",
+  "States": {
+    "Submit Job": {
+      "Next": "Wait X Seconds",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ],
+      "Type": "Task",
+      "OutputPath": "$.Payload",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {}
+    },
+    "Wait X Seconds": {
+      "Type": "Wait",
+      "SecondsPath": "$.waitSeconds",
+      "Next": "Get Job Status"
+    },
+    "Get Job Status": {
+      "Next": "Job Complete?",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ],
+      "Type": "Task",
+      "OutputPath": "$.Payload",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {}
+    },
+    "Job Complete?": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.status",
+          "StringEquals": "FAILED",
+          "Next": "Job Failed"
+        },
+        {
+          "Variable": "$.status",
+          "StringEquals": "SUCCEEDED",
+          "Next": "Job Succeeded"
+        }
+      ],
+      "Default": "Wait X Seconds"
+    },
+    "Job Failed": {
+      "Type": "Fail"
+    },
+    "Job Succeeded": {
+      "Type": "Succeed"
+    }
+  }
+}

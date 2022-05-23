@@ -1,1 +1,0 @@
-{"errorMessage": "error code: 401", "errorType": "ValueError", "requestId": "0e39efd0-482c-4da6-bffd-4a5836596b96", "stackTrace": ["  File \"/var/task/app.py\", line 10, in lambda_handler\n    raise ValueError(f\"error code: {event['code']}\")\n"]}
