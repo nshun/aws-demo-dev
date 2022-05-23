@@ -2,14 +2,15 @@
 
 ## 概要
 
+- 高レベルインターフェイス を使った一括操作
 - Scan と Query の違いを確認する
 
 ## 手順
 
 1. DynamoDB ローカルを実行
    - `docker run -p 8000:8000 amazon/dynamodb-local -jar DynamoDBLocal.jar -sharedDb -dbPath .`
-2. 高レベル API を使って 1000 件のデータを投入
-   - `python ddb_batch_write.py`
+2. 高レベルインターフェイス を使って 1000 件のデータを投入
+   - `python src/ddb_batch_write.py`
 3. ProductCategory が Book で、ID が 200 以下の件数を出力
    - Scan は全ての項目を取得したあとにフィルター
    - Query はプライマリキーの範囲で検索可能
