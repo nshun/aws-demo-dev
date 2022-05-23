@@ -2,12 +2,11 @@ import json
 
 
 def lambda_handler(event, context):
-    # イベントの中身を出力
-    print(f"event={event}")
-
     # 例外
-    if "code" not in event or event["code"] >= 400:
-        raise ValueError(f"error code: {event['code']}")
+    if "code" not in event:
+        raise ValueError("code not found\n")
+    if event["code"] >= 400:
+        raise ValueError(f"error code: {event['code']}\n")
 
     return {
         "statusCode": event["code"],

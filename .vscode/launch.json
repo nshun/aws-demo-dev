@@ -3,17 +3,26 @@
     {
       "type": "aws-sam",
       "request": "direct-invoke",
-      "name": "sam-app:HelloWorldFunction (python3.9)",
       "invokeTarget": {
         "target": "template",
-        "templatePath": "${workspaceFolder}/mod13/sam-app/template.yaml",
-        "logicalId": "HelloWorldFunction"
+        "logicalId": "DemoFunction",
+        "templatePath": "${workspaceFolder}/mod9/sam-app/template.yaml"
       },
       "lambda": {
-        "payload": {},
-        "environmentVariables": {},
-        "runtime": "python3.9"
-      }
+        "payload": {
+          "json": {
+            "code": 200
+          }
+        }
+      },
+      "sam": {
+        "containerBuild": false,
+        "skipNewImageCheck": false
+      },
+      "api": {
+        "httpMethod": "get"
+      },
+      "name": "mod9"
     },
     {
       "type": "aws-sam",
@@ -34,67 +43,6 @@
       "lambda": {
         "runtime": "python3.9"
       }
-    },
-    {
-      "type": "aws-sam",
-      "request": "direct-invoke",
-      "name": "demo-sam-lambda:HelloWorldFunction (python3.9)",
-      "invokeTarget": {
-        "target": "template",
-        "templatePath": "${workspaceFolder}/test/demo-sam-lambda/template.yaml",
-        "logicalId": "HelloWorldFunction"
-      },
-      "lambda": {
-        "payload": {},
-        "environmentVariables": {},
-        "runtime": "python3.9"
-      }
-    },
-    {
-      "type": "aws-sam",
-      "request": "direct-invoke",
-      "name": "API demo-sam-lambda:HelloWorldFunction (python3.9)",
-      "invokeTarget": {
-        "target": "api",
-        "templatePath": "${workspaceFolder}/test/demo-sam-lambda/template.yaml",
-        "logicalId": "HelloWorldFunction"
-      },
-      "api": {
-        "path": "/hello",
-        "httpMethod": "get",
-        "payload": {
-          "json": {}
-        }
-      },
-      "lambda": {
-        "runtime": "python3.9"
-      }
-    },
-    {
-      "type": "aws-sam",
-      "request": "direct-invoke",
-      "invokeTarget": {
-        "target": "template",
-        "logicalId": "HelloWorldFunction",
-        "templatePath": "${workspaceFolder}/mod9/sam-app/template.yaml"
-      },
-      "lambda": {
-        "payload": {
-          "json": {
-            "key1": "value1",
-            "key2": "value2",
-            "key3": "value3"
-          }
-        }
-      },
-      "sam": {
-        "containerBuild": false,
-        "skipNewImageCheck": false
-      },
-      "api": {
-        "httpMethod": "get"
-      },
-      "name": "sam-app:HelloWorldFunction"
     }
   ]
 }
