@@ -12,7 +12,7 @@ IAM ユーザー UserA (ポリシーなし)が S3 にアクセスするために
 # IAM ユーザーの作成
 aws iam create-user --user-name UserA
 
-# インラインポリシーの内容を確認
+# インラインポリシーの内容を確認 (${AccountID}は書き換える)
 cat UserA-InlinePolicy.json
 
 # UserA にインラインポリシーを付与
@@ -28,49 +28,66 @@ cat S3Support-TrustPolicy.json
 # IAM ロールの作成
 aws iam create-role --role-name S3Support --assume-role-policy-document file://S3Support-TrustPolicy.json
 
-# 付与するポリシーの中身を確認
+# 付与するポリシーの情報を確認
 aws iam get-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+
+# ポリシードキュメントを確認
+aws iam get-policy-version --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess --version-id v2
 
 # ポリシーを付与
 aws iam attach-role-policy --role-name S3Support --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
 ```
 
-3. タブを水平分割
-4. 実際に操作してみる
+3. 実際に操作してみる
 
 ```sh
-# 左: UserA にコンソールアクセスを許可
+# UserA にコンソールアクセスを許可
 aws iam create-access-key --user-name UserA
 
-# 右: UserA に変更する
+# UserA に変更する(環境変数)
 export AWS_ACCESS_KEY_ID=
 export AWS_SECRET_ACCESS_KEY=
 
-# 右: 切り替わってるか確認
+# UserA に切り替わってるか確認
 aws sts get-caller-identity
 
-# 左右: 実際に操作してみる (右は AccessDenied になる)
-aws s3 ls
+# 環境変数を削除
+unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
 
-# 右: S3Support を引き受けるための認証情報を払い出す
-aws sts assume-role --role-session-name DevOnAWS --role-arn "arn:aws:iam::${AccountId}:role/S3Support"
+#　UserA のプロファイルを作成
+aws configure --profile UserA
+code ~/.aws/credentials
 
-# 右: S3Support を引き受ける
-export AWS_ACCESS_KEY_ID=
-export AWS_SECRET_ACCESS_KEY=
-export AWS_SESSION_TOKEN=
+# 実際に操作してみる (AccessDenied になる)
+aws s3 ls --profile UserA
 
-# 右: 切り替わってるか確認
-aws sts get-caller-identity
+# S3Support を引き受けるための認証情報を払い出す
+aws sts assume-role --profile UserA --role-session-name DevOnAWS --role-arn "arn:aws:iam::${AccountId}:role/S3Support"
+
+# S3Support のプロファイルを作成
+code ~/.aws/credentials
+
+[S3Support]
+aws_access_key_id =
+aws_secret_access_key =
+aws_session_token =
+
+# プロファイルの確認
+aws sts get-caller-identity --profile S3Support
 
 # 右: 実際に操作してみる (成功)
-aws s3 ls
-aws s3 ls --recursive s3://${BucketName}
+aws s3 ls --profile S3Support
+aws s3 ls --profile S3Support --recursive s3://${BucketName}
 ```
 
 ## 作成したリソースの削除
 
+管理アカウントでログイン
+
 ```sh
+# CLI プロファイルの削除
+code ~/.aws/credentials
+
 # アクセスキーの確認
 aws iam list-access-keys --user-name UserA
 
