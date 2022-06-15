@@ -59,4 +59,8 @@ aws dynamodb delete-item  --endpoint-url http://localhost:8000 \
 
 ## 作成したリソースの削除
 
-- ddb-item-crud でも使うので維持
+```sh
+# テーブルの削除
+aws dynamodb delete-table --endpoint-url http://localhost:8000 \
+    --table-name ProductCatalog
+```
