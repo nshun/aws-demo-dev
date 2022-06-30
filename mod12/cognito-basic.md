@@ -46,3 +46,5 @@ python src/signin.py
 ```sh
 python src/clean.py
 ```
+
+- Cognito ユーザープールの削除
