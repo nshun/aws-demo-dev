@@ -3,7 +3,10 @@
 ## 概要
 
 - SAM を使って Lambda をローカルテスト
+  - [Running and debugging Lambda functions directly from code - AWS Toolkit for VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/serverless-apps-run-debug-no-template.html)
 - 同期呼び出しと非同期呼び出しの動作・再試行の違いを体験
+- デモ環境
+  - VSCode, AWS Toolkit for VSCode, AWS SAM CLI, Docker
 
 ## 手順
 
@@ -12,7 +15,9 @@
 2. Lambda のローカルテスト
    - 適当にブレークポイントを置く
    - ハンドラ関数上に出てくる `Edit: AWS...` をクリック
+     - またはコマンドパレットから `AWS: Edit SAM ...` を選択
    - 右ペインでデバッグ設定をして Invoke
+     - Payload: `{"code":200}`
    - 実行結果を確認する
 3. ビルド & デプロイ
 
