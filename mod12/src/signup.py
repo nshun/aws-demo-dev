@@ -16,6 +16,12 @@ password = str(uuid.uuid4())
 response = client.admin_create_user(
     UserPoolId=user_pool_id,
     Username=username,
+    UserAttributes=[
+      {
+        'Name': 'email',
+        'Value': 'demo@example.com'
+      }
+    ]
 )
 
 # パスワード設定

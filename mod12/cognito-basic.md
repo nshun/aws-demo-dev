@@ -39,7 +39,8 @@ python src/signin.py
    - Base64 でエンコードされているので、デコードする
      - https://jwt.io/
    - Cognito のトークンは暗号化されていない
-   - しかし、書き換えると署名の検証が失敗する
+     - しかし、書き換えると署名の検証が失敗する
+   - IdToken には email が含まれるが、 AccessToken には含まれない
 
 ## 作成したリソースの削除
 
