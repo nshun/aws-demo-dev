@@ -10,11 +10,8 @@
 
 ## 準備
 
-1. AWS Lambda Power Tuning tool をデプロイ
-
-```sh
-sam deploy --template-file src/sam-lambda-power-tuning.yml --stack-name lambda-power-tuning-app --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_IAM
-```
+AWS Lambda Power Tuning tool をデプロイ
+https://github.com/alexcasalboni/aws-lambda-power-tuning/blob/master/README-DEPLOY.md
 
 ## 手順
 
@@ -41,12 +38,8 @@ sam deploy --template-file src/sam-lambda-power-tuning.yml --stack-name lambda-p
 
 1. 実行結果の URL にアクセスし可視化
 
-- [サンプル結果](<https://lambda-power-tuning.show/#gAAAAQACAAQABsAL;mO5HQgRWkkG2OjJBiM96QR+FL0Hj7J9B;XHzhM4ReqzNjd9gzl0+QNBTSlDQQeYQ1;gAAAAQACAAQABsAL;XchbQqDTSkHkXh1BagM/QTMzL0GcxDZB;K8rIM2rWPTNlB5IzEzwvNJrycDQesAA1;listFunction%20(x86_64);listFunction%20(arm64)>)
+- [サンプル結果](<https://lambda-power-tuning.show/#gAAAAQACAAQABsAL;ZmYgQt7dfUEiIiJBZmYOQQAAGEEAACBB;+uW4M5dPkDNwbcYzilkiNJ5KhzQQeQQ1;gAAAAQACAAQABsAL;7+48Qs3MTEF3dxdBiYgYQby7I0GrqhpB;EzyvM2rWPTNlB5IzZQcSNJrycDTdetY0;listFunction(x86_64);listFunction(arm64)>)
 
 ## 作成したリソースの削除
 
-1. Power Tuning の削除
-
-```sh
-sam delete --stack-name lambda-power-tuning-app
-```
+Lambda コンソールのアプリケーションページで `serverlessrepo-aws-lambda-power-tuning` を削除

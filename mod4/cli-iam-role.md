@@ -56,7 +56,10 @@ unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
 
 #　UserA のプロファイルを作成
 aws configure --profile UserA
+
+# 作成された情報を確認
 code ~/.aws/credentials
+code ~/.aws/config
 
 # 実際に操作してみる (AccessDenied になる)
 aws s3 ls --profile UserA
@@ -64,20 +67,16 @@ aws s3 ls --profile UserA
 # S3Support を引き受けるための認証情報を払い出す
 aws sts assume-role --profile UserA --role-session-name DevOnAWS --role-arn "arn:aws:iam::${AccountId}:role/S3Support"
 
-# S3Support のプロファイルを作成
-code ~/.aws/credentials
+# S3Support に変更する(環境変数)
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_SESSION_TOKEN=
 
-[S3Support]
-aws_access_key_id =
-aws_secret_access_key =
-aws_session_token =
-
-# プロファイルの確認
-aws sts get-caller-identity --profile S3Support
+# S3Support　に切り替わってるか確認
+aws sts get-caller-identity
 
 # 右: 実際に操作してみる (成功)
-aws s3 ls --profile S3Support
-aws s3 ls --profile S3Support --recursive s3://${BucketName}
+aws s3 ls
 ```
 
 ## 作成したリソースの削除

@@ -50,11 +50,18 @@ aws dynamodb get-item --endpoint-url http://localhost:8000 \
 ```
 
 3. NoSQL WorkBench で接続して確認
+   - [NoSQL Workbench](https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/workbench.html) をインストール
    - 操作を試して、コード出力まで確認
      - Query, Scan
    - PartiQL を実行
-     - `SELECT * FROM ProductCatalog;`
+     - `SELECT * FROM ProductCatalog`
+
+```sh
+aws dynamodb execute-statement --endpoint-url http://localhost:8000 \
+    --statement "SELECT * FROM ProductCatalog"
+``
 
 ## 作成したリソースの削除
 
 - Mod 8 でも使うので維持
+```

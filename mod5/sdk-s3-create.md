@@ -6,10 +6,10 @@ SDK(Python) を使ってバケットの作成を確認する
 
 ## 手順
 
-1. python にアクセス
+1. python (v3) にアクセス
 
 ```sh
-python3
+python -V
 ```
 
 3. バケットを作成して削除

@@ -19,16 +19,23 @@ SDK(Python) を使ってバケット・オブジェクトの CRUD 操作を確�
 
 2. 一括操作
 
-- SDK から一括操作
-  - `python batch.py`
-- CLI 上位コマンドで一括操作
-  - 対象バケット確認
-    - `aws s3 ls`
-  - 画像以外のオブジェクトを一括削除
-    - 一旦 dryrun で対象を確認
-    - `aws s3 rm s3://${BucketName} --recursive --exclude '*.jpg' --dryrun`
-    - 本番削除
-    - `aws s3 rm s3://${BucketName} --recursive --exclude '*.jpg'`
+```sh
+# SDK から一括操作
+python batch.py
+
+# CLI 高レベルコマンドで一括操作
+aws s3 ls
+
+BucketName=
+aws s3 ls s3://${BucketName}
+
+# 画像以外のオブジェクトを一括削除する
+## 一旦 dryrun で対象を確認
+aws s3 rm s3://${BucketName} --recursive --exclude '*.jpg' --dryrun
+
+## 本番削除
+aws s3 rm s3://${BucketName} --recursive --exclude '*.jpg'
+```
 
 ## 作成したリソースの削除
 
