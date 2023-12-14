@@ -19,10 +19,15 @@ cd cdk-app
 cdk init --language=typescript
 ```
 
-2. cdk_app/lib/cdk-app-stack.ts を編集
+2. cdk_app/lib/cdk-app-stack.ts を編集 (CodeWhisperer)
 
 ```ts
-new s3.Bucket(this, 'DemoBucket', { removalPolicy: RemovalPolicy.DESTROY });
+// Define S3 Bucket (version enabled)
+const bucket = new cdk.aws_s3.Bucket(this, 'DemoBucket', {
+  versioned: true,
+  removalPolicy: cdk.RemovalPolicy.DESTROY,
+  autoDeleteObjects: true,
+});
 ```
 
 3. CDK のデプロイ
